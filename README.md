@@ -1,9 +1,9 @@
 # programmiersprachen-aufgabenblatt-3
 
-[![Build Linux](https://github.com/vrsys/programmiersprachen-aufgabenblatt-3/actions/workflows/build-linux.yml/badge.svg)](https://github.com/vrsys/programmiersprachen-aufgabenblatt-3/actions/workflows/build-linux.yml)
-[![Build macOS](https://github.com/vrsys/programmiersprachen-aufgabenblatt-3/actions/workflows/build-macos.yml/badge.svg)](https://github.com/vrsys/programmiersprachen-aufgabenblatt-3/actions/workflows/build-macos.yml)
-[![Build Windows](https://github.com/vrsys/programmiersprachen-aufgabenblatt-3/actions/workflows/build-windows.yml/badge.svg)](https://github.com/vrsys/programmiersprachen-aufgabenblatt-3/actions/workflows/build-windows.yml)
-[![Doctest](https://github.com/vrsys/programmiersprachen-aufgabenblatt-3/actions/workflows/doctest.yml/badge.svg)](https://github.com/vrsys/programmiersprachen-aufgabenblatt-3/actions/workflows/doctest.yml)
+[![Build Linux](../../actions/workflows/build-linux.yml/badge.svg)](../../actions/workflows/build-linux.yml)
+[![Build macOS](../../actions/workflows/build-macos.yml/badge.svg)](../../actions/workflows/build-macos.yml)
+[![Build Windows](../../actions/workflows/build-windows.yml/badge.svg)](../../actions/workflows/build-windows.yml)
+[![Doctest](../../actions/workflows/doctest.yml/badge.svg)](../../actions/workflows/doctest.yml)
 
 Repository template for **Assignment 3** of the Programming Languages course (*Programmiersprachen*).
 This assignment covers pointers, generic programming with templates, containers, and the Standard Template Library (STL).
