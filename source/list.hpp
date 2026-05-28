@@ -88,7 +88,11 @@ class List {
     /* Declaration of push_front-Method */
     void pop_back();
 
-    /* Declaration of emplace-Method */
+    /* Declaration of emplace_front-Method */
+    template <class... Args>
+    void emplace_front(Args&&... args);
+
+    /* Declaration of emplace_back-Method */
     template <class... Args>
     void emplace_back(Args&&... args);
 
@@ -111,6 +115,9 @@ class List {
 
     /* Declaration of insert-Method */
     ListIterator<T> insert(ListIterator<T> const& position, T const& value);
+    /* Declaration of emplace-Method */
+    template <class... Args>
+    ListIterator<T> emplace(ListIterator<T> const& position, Args&&... args);
     /* Declaration of erase-Method */
     ListIterator<T> erase(ListIterator<T> const& position);
 
@@ -202,6 +209,16 @@ void List<T>::emplace_back(Args&&... args)
     // TODO: emplace_back-method (Aufgabe 5.3)
 }
 
+//=========================
+/* Aufgabe 5.3 - Teil 6 */
+/* ... */
+template <typename T>
+template <class... Args>
+void List<T>::emplace_front(Args&&... args)
+{
+    // TODO: emplace_front-method (Aufgabe 5.3)
+}
+
 
 //=========================
 /* Aufgabe 5.3 - Teil 6 */
@@ -216,7 +233,7 @@ T& List<T>::front() {
 }
 
 //=========================
-/* Aufgabe 5.3 - Teil 7 */
+/* Aufgabe 5.3 - Teil 8 */
 /* ... */
 template <typename T>
 T& List<T>::back() {
@@ -333,6 +350,13 @@ ListIterator<T> List<T>::end() {
 /* ... */
 template <typename T>
 ListIterator<T> List<T>::insert(ListIterator<T> const& position, T const& value) {
+
+}
+
+template <typename T>
+template <class... Args>
+ListIterator<T> List<T>::emplace(ListIterator<T> const& position, Args&&... args)
+{
 
 }
 
