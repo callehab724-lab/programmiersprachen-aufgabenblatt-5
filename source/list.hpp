@@ -8,6 +8,7 @@
 #include <cstddef>  //ptrdiff_t
 #include <iterator> //std::bidirectional_iterator_tag
 #include <iostream>
+#include <utility>
 
 #include <initializer_list>
 
@@ -137,7 +138,12 @@ class List {
 /* Aufgabe 5.2 - Teil 1 */
 /* ... */
 template <typename T>
-List<T>::List() {}
+List<T>::List()
+    : size_{ 0 },
+    first_{ nullptr },
+    last_{ nullptr }
+{
+}
 
 //=========================
 // test and implement
@@ -146,7 +152,7 @@ List<T>::List() {}
 template <typename T>
 std::size_t List<T>::size() const {
     //TODO: return value of member variable insteaf of 27
-    return 27;
+    return size_;
 };
 
 //=========================
@@ -156,7 +162,7 @@ std::size_t List<T>::size() const {
 template <typename T>
 bool List<T>::empty() const {
     // check whether size member variable is zero -- this should be a one line implementation
-    return false;
+    return size_ == 0;
 };
 
 //=========================
@@ -164,7 +170,20 @@ bool List<T>::empty() const {
 /* ... */
 template <typename T>
 void List<T>::push_front(T const& element) {
-    // TODO: push_front-method (Aufgabe 5.3)
+
+    auto* node = new ListNode<T>;
+    node->value = element;
+
+    if (empty()) {
+        first_ = last_ = node;
+    }
+    else {
+        node->next = first_;
+        first_->prev = node;
+        first_ = node;
+    }
+
+    ++size_;
 }
 
 //=========================
@@ -175,7 +194,19 @@ void List<T>::pop_front() {
     if (empty()) {
         throw "List is empty";
     }
+    ListNode<T>* old = first_;
 
+    if (size_ == 1) {
+        first_ = nullptr;
+        last_ = nullptr;
+    }
+    else {
+        first_ = first_->next;
+        first_->prev = nullptr;
+    }
+
+    delete old;
+    --size_;
     // TODO: remainder of pop_front-method (Aufgabe 5.3)
 }
 
@@ -184,7 +215,20 @@ void List<T>::pop_front() {
 /* ... */
 template <typename T>
 void List<T>::push_back(T const& element) {
-    // TODO: push_back-method (Aufgabe 5.3)
+
+    auto* node = new ListNode<T>;
+    node->value = element;
+
+    if (empty()) {
+        first_ = last_ = node;
+    }
+    else {
+        node->prev = last_;
+        last_->next = node;
+        last_ = node;
+    }
+
+    ++size_;
 }
 
 //=========================
@@ -195,7 +239,19 @@ void List<T>::pop_back() {
     if (empty()) {
         throw "List is empty";
     }
+    ListNode<T>* old = last_;
 
+    if (size_ == 1) {
+        first_ = nullptr;
+        last_ = nullptr;
+    }
+    else {
+        last_ = last_->prev;
+        last_->next = nullptr;
+    }
+
+    delete old;
+    --size_;
     // TODO: remainder of pop_back-method (Aufgabe 5.3)
 }
 
@@ -228,7 +284,7 @@ T& List<T>::front() {
     if (empty()) {
         throw "List is empty";
     }
-
+    return first_->value;
     // TODO: remainder of front-method (Aufgabe 5.3)
 }
 
@@ -240,7 +296,7 @@ T& List<T>::back() {
     if (empty()) {
         throw "List is empty";
     }
-
+    return last_->value;
     // TODO: remainder of back-method (Aufgabe 5.3)
 }
 
@@ -252,6 +308,9 @@ T& List<T>::back() {
 template <typename T>
 void List<T>::clear() {
 
+    while (!empty()) {
+        pop_front();
+    }
 }
 
 //=========================
@@ -261,6 +320,7 @@ void List<T>::clear() {
 /* ... */
 template <typename T>
 List<T>::~List() {
+    clear();
     //TODO: Implement via clear-Method (Aufgabe 5.4)
 } //can not be tested with unit tests
 
@@ -270,7 +330,16 @@ List<T>::~List() {
 // Aufgabe 5.5
 /* ... */
 template <typename T>
-List<T>::List(List<T> const& rhs) {}
+List<T>::List(List<T> const& rhs)
+    : List()
+{
+    for (auto node = rhs.first_;
+        node != nullptr;
+        node = node->next)
+    {
+        push_back(node->value);
+    }
+}
 
 //=========================
 // test and implement:
@@ -279,7 +348,9 @@ List<T>::List(List<T> const& rhs) {}
 /* ... */
 template <typename T>
 void List<T>::swap(List<T>& rhs) {
-
+    std::swap(size_, rhs.size_);
+    std::swap(first_, rhs.first_);
+    std::swap(last_, rhs.last_);
 }
 
 //=========================
@@ -289,7 +360,8 @@ void List<T>::swap(List<T>& rhs) {
 /* ... */
 template <typename T>
 List<T>& List<T>::operator=(List<T> rhs) {
-
+    swap(rhs);
+    return *this;
 }
 
 //=========================
@@ -313,6 +385,24 @@ List<T> reverse(List<T> const& list_to_reverse) {
 /* ... */
 template <typename T>
 bool List<T>::operator==(List const& rhs) const {
+    if (size_ != rhs.size_) {
+        return false;
+    }
+
+    auto* lhs_node = first_;
+    auto* rhs_node = rhs.first_;
+
+    while (lhs_node != nullptr) {
+
+        if (lhs_node->value != rhs_node->value) {
+            return false;
+        }
+
+        lhs_node = lhs_node->next;
+        rhs_node = rhs_node->next;
+    }
+
+    return true;
     //TODO: operator== (Aufgabe 5.8)
 }
 
@@ -321,6 +411,7 @@ bool List<T>::operator==(List const& rhs) const {
 /* ... */
 template <typename T>
 bool List<T>::operator!=(List const& rhs) const {
+    return !(*this == rhs);
     //TODO: operator!= (Aufgabe 5.8)
     // make use of operator== you implemented
 }
@@ -332,7 +423,7 @@ template <typename T>
 ListIterator<T> List<T>::begin() {
     //TODO: begin-Method returning an Iterator to the 
     //      first element in the List (Aufgabe 5.9)
-    return {};
+    return ListIterator<T>(first_);
 }
 
 //=========================
@@ -342,7 +433,7 @@ template <typename T>
 ListIterator<T> List<T>::end() {
     //TODO: end-Method returning an Iterator to element after (!) 
     //      the last element in the List (Aufgabe 5.9)
-    return {};
+    return ListIterator<T>(nullptr);
 }
 
 //=========================

@@ -76,7 +76,7 @@ T& ListIterator<T>::operator*() const {
     if (nullptr == node_) {
         throw "Iterator does not point to valid node";
     }
-
+    return node_->value;
     //TODO: remaining implementation of derefenciation of 
     //      iterator using operator*
 
@@ -92,7 +92,7 @@ T* ListIterator<T>::operator->() const {
     if (nullptr == node_) {
         throw "Iterator does not point to valid node";
     }
-
+    return &(node_->value);
     //TODO: remaining implementation of derefenciation of 
     //      iterator using operator->
 }  //call it->method() or it->member
@@ -107,7 +107,8 @@ ListIterator<T>& ListIterator<T>::operator++() {
     if (nullptr == node_) {
         throw "Iterator does not point to valid node";
     }
-
+    node_ = node_->next;
+    return *this;
     //TODO: Implement Postincrement-Operation for Iterator
 }
 
@@ -121,7 +122,9 @@ ListIterator<T> ListIterator<T>::operator++(int) {
     if (nullptr == node_) {
         throw "Iterator does not point to valid node";
     }
-
+    ListIterator<T> old(*this);
+    node_ = node_->next;
+    return old;
     //TODO: Implement Postincrement-Operation for Iterator
 }
 
@@ -132,9 +135,10 @@ ListIterator<T> ListIterator<T>::operator++(int) {
 // not implemented yet
 template <typename T>
 bool ListIterator<T>::operator==(ListIterator<T> x) const {
+
     //TODO: Implement Equality-Operation for Iterator
     // Iterators should be the same if they refer to the same node
-    return false;
+    return node_ == x.node_;
 } // call it: == it
 
 //=========================
@@ -146,7 +150,7 @@ template <typename T>
 bool ListIterator<T>::operator!=(ListIterator<T> x) const {
     //TODO: Implement Inequality-Operation for Iterator  
     // Reuse operator==
-    return false;
+    return !(*this == x);
 } // call it: != it
 
 //=========================
