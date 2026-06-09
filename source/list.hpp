@@ -261,7 +261,21 @@ void List<T>::pop_back() {
 template <typename T>
 template <class... Args>
 void List<T>::emplace_back(Args&&... args)
-{
+{   
+    auto* node = new ListNode<T>;
+
+    node->value = T(std::forward<Args>(args)...);
+
+    if (empty()) {
+        first_ = last_ = node;
+    }
+    else {
+        node->prev = last_;
+        last_->next = node;
+        last_ = node;
+    }
+
+    ++size_;
     // TODO: emplace_back-method (Aufgabe 5.3)
 }
 
@@ -271,7 +285,21 @@ void List<T>::emplace_back(Args&&... args)
 template <typename T>
 template <class... Args>
 void List<T>::emplace_front(Args&&... args)
-{
+{   
+    auto* node = new ListNode<T>;
+
+    node->value = T(std::forward<Args>(args)...);
+
+    if (empty()) {
+        first_ = last_ = node;
+    }
+    else {
+        node->next = first_;
+        first_->prev = node;
+        first_ = node;
+    }
+
+    ++size_;
     // TODO: emplace_front-method (Aufgabe 5.3)
 }
 
@@ -331,15 +359,17 @@ List<T>::~List() {
 /* ... */
 template <typename T>
 List<T>::List(List<T> const& rhs)
-    : List()
+    : size_{ 0 },
+    first_{ nullptr },
+    last_{ nullptr }
 {
     for (auto node = rhs.first_;
         node != nullptr;
         node = node->next)
     {
         push_back(node->value);
+    }  push_back(node->value);
     }
-}
 
 //=========================
 // test and implement:
