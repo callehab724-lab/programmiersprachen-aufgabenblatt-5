@@ -1,0 +1,33 @@
+TEST_CASE("list equality operator")
+{
+    List<int> a;
+    List<int> b;
+
+    CHECK(a == b);
+
+    a.push_back(1);
+    b.push_back(1);
+
+    CHECK(a == b);
+
+    a.push_back(2);
+    b.push_back(3);
+
+    CHECK_FALSE(a == b);
+}
+
+TEST_CASE("list inequality operator")
+{
+    List<int> a;
+    List<int> b;
+
+    CHECK_FALSE(a != b);
+
+    a.push_back(1);
+
+    CHECK(a != b);
+
+    b.push_back(1);
+
+    CHECK_FALSE(a != b);
+}
