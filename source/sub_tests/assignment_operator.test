@@ -1,0 +1,41 @@
+TEST_CASE("assignment operator copies list contents")
+{
+    List<int> a;
+    a.push_back(1);
+
+    List<int> b;
+    b.push_back(10);
+    b.push_back(20);
+
+    a = b;
+
+    CHECK(a.size() == 2);
+    CHECK(a.front() == 10);
+    CHECK(a.back() == 20);
+}
+
+TEST_CASE("assignment operator performs deep copy")
+{
+    List<int> a;
+    a.push_back(1);
+
+    List<int> b;
+    b.push_back(5);
+
+    a = b;
+
+    b.front() = 99;
+
+    CHECK(a.front() == 5);
+}
+
+TEST_CASE("assignment operator handles self assignment")
+{
+    List<int> a;
+    a.push_back(42);
+
+    a = a;
+
+    CHECK(a.size() == 1);
+    CHECK(a.front() == 42);
+}

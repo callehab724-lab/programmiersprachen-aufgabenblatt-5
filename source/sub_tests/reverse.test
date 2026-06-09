@@ -1,0 +1,42 @@
+TEST_CASE("reverse empty list")
+{
+    List<int> l;
+
+    l.reverse();
+
+    CHECK(l.empty());
+}
+
+TEST_CASE("reverse single element")
+{
+    List<int> l;
+
+    l.push_back(42);
+
+    l.reverse();
+
+    CHECK(l.size() == 1);
+    CHECK(l.front() == 42);
+    CHECK(l.back() == 42);
+}
+
+TEST_CASE("reverse list")
+{
+    List<int> l;
+
+    l.push_back(1);
+    l.push_back(2);
+    l.push_back(3);
+
+    l.reverse();
+
+    auto it = l.begin();
+
+    CHECK(*it == 3);
+    ++it;
+
+    CHECK(*it == 2);
+    ++it;
+
+    CHECK(*it == 1);
+}

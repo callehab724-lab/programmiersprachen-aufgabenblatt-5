@@ -48,6 +48,10 @@ ListNode<T>* get_node_pointer(ListIterator<T> const& list_iterator_to_test) { re
 #include "sub_tests/iterators/operator_does_not_equal.test"
 #include "sub_tests/iterators/operator_iterate_forward.test"
 
+#include "sub_tests/assignment_operator.test"
+#include "sub_tests/reverse.test"
+#include "sub_tests/free_reverse.test"
+
 
 #include <map>
 

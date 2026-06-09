@@ -400,6 +400,21 @@ List<T>& List<T>::operator=(List<T> rhs) {
 template <typename T>
 void List<T>::reverse() {
 
+    ListNode<T>* current = first_;
+
+    while (current != nullptr) {
+
+        ListNode<T>* temp = current->next;
+
+        current->next = current->prev;
+        current->prev = temp;
+
+        current = temp;
+    }
+
+    ListNode<T>* temp = first_;
+    first_ = last_;
+    last_ = temp;
 }
 
 //=========================
@@ -408,6 +423,15 @@ void List<T>::reverse() {
 template <typename T>
 List<T> reverse(List<T> const& list_to_reverse) {
 
+    List<T> result;
+
+    List<T> copy(list_to_reverse);
+
+    for (auto it = copy.begin(); it != copy.end(); ++it) {
+        result.push_front(*it);
+    }
+
+    return result;
 }
 
 //=========================
