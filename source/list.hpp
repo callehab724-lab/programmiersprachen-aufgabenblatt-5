@@ -368,8 +368,8 @@ List<T>::List(List<T> const& rhs)
         node = node->next)
     {
         push_back(node->value);
-    }  push_back(node->value);
     }
+}
 
 //=========================
 // test and implement:
